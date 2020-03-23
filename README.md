@@ -39,13 +39,13 @@ https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html#cli-qui
 #### Get your external IP (to allow access to your AWS instance)
 `dig TXT +short o-o.myaddr.l.google.com @ns1.google.com | awk -F'"' '{ print $2}'`
 
-#### Initialize Terraform
-`terraform init`
-
 #### Modify config file with external IP for whitelist
 Edit `terraform.tfvars` with external IP/netmask (gathered above) for whitelist 
 
 `Ex. "192.168.1.1/32"`
+
+#### Initialize Terraform
+`terraform init`
 
 #### Build VPC Infrastructure and Instance
 `terraform apply --auto-approve`   
@@ -54,6 +54,16 @@ The output from this command should provide you with the public IP address of yo
 
 #### SSH into instance
 `ssh -i ~/.ssh/securityonion onion@$instanceip`  
+
+#### Run Setup   
+Run setup with `sosetup-minimal` to configure Security Onion on smaller-sized instances.   
+
+Otherwise, run setup with `sosetup` as you normally would.   
+
+Alternatively, if you simply want to verify VXLAN traffic is being mirrored to the Security Onion sniffing interface, do something like the following once logged in:   
+
+`ifconfig ens6 up`   
+`tcpdump -nni ens6`
 
 #### Tear it down
 The instance and VPC configuration can quickly be destroyed with the following:   
