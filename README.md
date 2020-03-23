@@ -23,8 +23,13 @@ By using Terraform, one can quickly spin up Security Onion in AWS, provided you 
 `git clone -b dev https://github.com/Security-Onion-Solutions/securityonion-cloud
 && cd securityonion-cloud/terraform`
 
-#### Install Terraform
+#### Install Terraform and AWS CLI
+##### Linux (recommended Ubuntu 18.04 or higher) or Mac:
 `./install-terraform-awscli.sh`
+##### Windows
+https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-windows.html#cliv2-windows-prereq   
+https://www.terraform.io/downloads.html   
+https://stackoverflow.com/questions/1618280/where-can-i-set-path-to-make-exe-on-windows   
 
 #### Configure AWS details
 See the following for more details:   
