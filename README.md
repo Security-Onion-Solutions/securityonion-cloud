@@ -27,7 +27,7 @@ By using Terraform, one can quickly spin up Security Onion in AWS, provided you 
 `./install-terraform-awscli.sh`
 
 #### Configure AWS details
-See the following for more details:
+See the following for more details:   
 https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html#cli-quick-configuration
 
 
