@@ -1,5 +1,7 @@
-# Written by: Jonathan Johnson
-# Updated by: Dustin Lee
+# Originally written by: Jonathan Johnson
+# Updated by: 
+#   Dustin Lee
+#   Wes Lambert
 
 # Provide Region
 provider "aws" {
