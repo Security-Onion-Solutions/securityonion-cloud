@@ -75,6 +75,9 @@ Alternatively, if you simply want to verify VXLAN traffic is being mirrored to t
 `ifconfig ens6 up`   
 `tcpdump -nni ens6`
 
+#### Note
+Currently, only the traffic of the primary interface of the Security Onion instance is mirrored to the sniffing interface (to illustrate collection of VXLAN traffic, etc).  You may consider setting up additional mirror sessions if you wish to mirror traffic from other instances.
+
 #### Tear it down
 The instance and VPC configuration can quickly be destroyed with the following:   
 `terraform destroy --auto-approve`
