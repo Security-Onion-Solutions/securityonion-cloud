@@ -9,7 +9,12 @@ The following components are currently supported and are in testing:
 ### Security Onion AMI   
 The latest version available can be located under the AWS Community AMIs, titled:
 
-`Security-Onion-16.04-2020-03-24-1209          ami-0177df706d9ec9e38`
+`Security-Onion-16.04-2020-03-24-1209`   
+
+- us-east-1   
+`ami-01ace718c1a93684e`   
+- us-east-2   
+`ami-0177df706d9ec9e38`   
 
 
 ### Configuring the Security Onion AMI and VPC Traffic Mirroring with Terraform
