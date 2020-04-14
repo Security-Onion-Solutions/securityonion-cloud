@@ -1,11 +1,10 @@
-# Originally written by: Jonathan Johnson
-# Updated by: 
-#   Dustin Lee
-#   Wes Lambert
+# Originally Written by: Jonathan Johnson
+# Updated by: Dustin Lee for Security Onion
+# Additions and updates by Wes Lambert for Security Onion and VPC Mirroring
 
 # Provide Region
 provider "aws" {
-region                  = var.region
+  region = var.region
 }
 
 # Inital VPC 
@@ -38,8 +37,8 @@ resource "aws_subnet" "default" {
 
 
 resource "aws_vpc_dhcp_options" "default" {
-  domain_name_servers  = concat(var.external_dns_servers)
- }
+  domain_name_servers = concat(var.external_dns_servers)
+}
 
 resource "aws_vpc_dhcp_options_association" "default" {
   vpc_id          = aws_vpc.terraform.id
@@ -50,7 +49,7 @@ resource "aws_vpc_dhcp_options_association" "default" {
 resource "aws_security_group" "securityonion" {
   name        = "securityonion_security_group"
   description = "SecurityOnion: Security Group"
-  vpc_id	= aws_vpc.terraform.id
+  vpc_id      = aws_vpc.terraform.id
 
   # SSH Access
   ingress {
@@ -89,7 +88,7 @@ resource "aws_security_group" "securityonion" {
 resource "aws_security_group" "securityonion_sniffing" {
   name        = "securityonion_sniffing_security_group"
   description = "SecurityOnion: Sniffing Security Group"
-  vpc_id        = aws_vpc.terraform.id
+  vpc_id      = aws_vpc.terraform.id
 
 
   # private subnet
@@ -107,10 +106,10 @@ resource "aws_key_pair" "auth" {
 }
 
 resource "aws_network_interface" "securityonion" {
-    count            = var.onions
-    subnet_id        = aws_subnet.default.id
-    private_ips      = ["172.16.163.2${count.index}"]
-    security_groups  = [aws_security_group.securityonion_sniffing.id]
+  count           = var.onions
+  subnet_id       = aws_subnet.default.id
+  private_ips     = ["172.16.163.2${count.index}"]
+  security_groups = [aws_security_group.securityonion_sniffing.id]
 }
 
 resource "aws_instance" "securityonion" {
@@ -132,7 +131,7 @@ resource "aws_instance" "securityonion" {
       "echo '127.0.0.1 securityonion-${count.index}' | sudo tee -a /etc/hosts",
       "sudo hostnamectl set-hostname securityonion-${count.index}",
     ]
-      connection {
+    connection {
       host        = coalesce(self.public_ip, self.private_ip)
       type        = "ssh"
       user        = "onion"
@@ -152,9 +151,24 @@ resource "aws_network_interface_attachment" "securityonion" {
   network_interface_id = aws_network_interface.securityonion[count.index].id
   device_index         = 1
 }
- 
+
+resource "aws_ec2_traffic_mirror_target" "security_onion_sniffing" {
+  count                = var.onions
+  description          = "SO Sniffing Interface Target"
+  network_interface_id = aws_network_interface.securityonion[count.index].id
+  tags = {
+    Name = "SO Mirror Target"
+  }
+  depends_on = [
+    aws_network_interface_attachment.securityonion
+  ]
+}
+
 resource "aws_ec2_traffic_mirror_filter" "so_mirror_filter" {
   description = "Security Onion Mirror Filter - Allow All"
+  tags = {
+    Name = "SO Mirror Filter"
+  }
 }
 
 resource "aws_ec2_traffic_mirror_filter_rule" "so_outbound" {
@@ -179,35 +193,119 @@ resource "aws_ec2_traffic_mirror_filter_rule" "so_inbound" {
   protocol = 6
 
   destination_port_range {
-    from_port = 1 
+    from_port = 1
     to_port = 65535
   }
   source_port_range {
-    from_port = 1 
+    from_port = 1
     to_port = 65535
   }
 }
 
-resource "aws_ec2_traffic_mirror_target" "security_onion_sniffing" {
-  count                = var.onions
-  description          = "SO Sniffing Interface Target"
-  network_interface_id = aws_network_interface.securityonion[count.index].id
-  tags          = {
-    Name        = "SO Mirror Target"
+// The following implements AutoMirror functionality https://github.com/3CORESec/AWS-AutoMirror
+
+resource "aws_iam_role_policy" "auto_mirror_policy" {
+  name = "auto_mirror_policy"
+  role = aws_iam_role.auto_mirror_role.id
+
+  policy = <<-EOF
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "logs:*"
+            ],
+            "Resource": "arn:aws:logs:*:*:*"
+        },
+        {
+            "Sid": "AutoMirrorExecutionPolicy",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DescribeInstances",
+                "ec2:DescribeTrafficMirrorFilters",
+                "ec2:DescribeTrafficMirrorTargets",
+                "ec2:CreateTags",
+                "ec2:CreateTrafficMirrorSession",
+                "ec2:DescribeTrafficMirrorSessions",
+                "ec2:createTrafficMirrorFilterRule",
+                "ec2:createTrafficMirrorFilter"
+            ],
+            "Resource": "*"
+        }
+    ]
   }
-  depends_on = [
-    aws_network_interface_attachment.securityonion
-  ]
+  EOF
 }
 
-resource "aws_ec2_traffic_mirror_session" "so_mirror_session" {
-  tags = {
-    Name = "SO Session"
+resource "aws_iam_role" "auto_mirror_role" {
+  name = "auto_mirror_role"
+
+  assume_role_policy = <<-EOF
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Action": "sts:AssumeRole",
+        "Principal": {
+          "Service": "lambda.amazonaws.com"
+        },
+        "Effect": "Allow",
+        "Sid": ""
+      }
+    ]
   }
-  count = var.onions
-  description              = "SO Mirror Session"
-  traffic_mirror_filter_id = aws_ec2_traffic_mirror_filter.so_mirror_filter.id
-  traffic_mirror_target_id = aws_ec2_traffic_mirror_target.security_onion_sniffing[count.index].id
-  network_interface_id     = aws_instance.securityonion[count.index].primary_network_interface_id
-  session_number           = 1
+  EOF
+}
+
+data "archive_file" "zip" {
+  type        = "zip"
+  source_file = "./AutoMirror/auto_mirror_lambda.js"
+  output_path = "./AutoMirror/auto_mirror_lambda.zip"
+}
+
+resource "aws_lambda_function" "auto_mirror_lambda" {
+  filename      = "${data.archive_file.zip.output_path}"
+  function_name = "auto_mirror_lambda"
+  role          = "${aws_iam_role.auto_mirror_role.arn}"
+  handler       = "auto_mirror_lambda.handler"
+  source_code_hash = "${data.archive_file.zip.output_base64sha256}"
+  runtime          = "nodejs12.x"
+  timeout = 30
+}
+
+resource "aws_cloudwatch_event_rule" "auto_mirror_rule" {
+  name        = "auto_mirror_rule"
+  description = "Configure mirror"
+
+  event_pattern = <<PATTERN
+{
+  "source": [
+    "aws.ec2"
+  ],
+  "detail-type": [
+    "EC2 Instance State-change Notification"
+  ],
+  "detail": {
+    "state": [
+      "pending"
+    ]
+  }
+}
+PATTERN
+}
+
+resource "aws_cloudwatch_event_target" "auto_mirror_lambda" {
+  rule      = "${aws_cloudwatch_event_rule.auto_mirror_rule.name}"
+  target_id = "auto_mirror_lambda"
+  arn       = "${aws_lambda_function.auto_mirror_lambda.arn}"
+}
+
+resource "aws_lambda_permission" "allow_cloudwatch" {
+  statement_id  = "AllowExecutionFromCloudWatch"
+  action        = "lambda:InvokeFunction"
+  function_name = "${aws_lambda_function.auto_mirror_lambda.function_name}"
+  principal     = "events.amazonaws.com"
+  source_arn     = "${aws_cloudwatch_event_rule.auto_mirror_rule.arn}"
 }

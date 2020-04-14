@@ -11,8 +11,8 @@ variable "onionuser" {
 }
 
 variable "onionpass" {
-  type        = list(string)
-  default     = [""]
+  type    = list(string)
+  default = [""]
 }
 
 variable "profile" {
