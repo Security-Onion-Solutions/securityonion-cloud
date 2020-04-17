@@ -20,7 +20,7 @@ The latest version available can be located under the AWS Community AMIs, titled
 ### Configuring the Security Onion AMI and VPC Traffic Mirroring with Terraform
 Special thanks goes to Jonathan Johnson (@jsecurity101) and Dustin Lee (@dlee35),for their existing work on the base Terraform configuration and Security Onion additions!
 
-By using Terraform, one can quickly spin up Security Onion in AWS, creating a dedicated VPC, security groups, Security Onion EC@ instance, interfaces, VPC mirror configuration, etc. provided you have an existing AWS account.
+By using Terraform, one can quickly spin up Security Onion in AWS, creating a dedicated VPC, security groups, Security Onion EC2 instance, interfaces, VPC mirror configuration, etc. provided you have an existing AWS account.
 
 **PLEASE NOTE**: The default size EC2 instance used by the Terraform scripts is `t3.medium`, which is the **minimum** recommended size (2 cores/4GB RAM) to use while testing Security Onion in AWS.  Given that this instance is not free-tier eligible, you or your organization may be charged by AWS as a result of using an instance of this size or VPC mirroring -- we do not charge anything for the use of the Security Onion AMI itself.
 
