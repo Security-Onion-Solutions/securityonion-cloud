@@ -57,7 +57,7 @@ Edit `terraform.tfvars` with external IP/netmask (gathered above) for whitelist
 #### Enable additional monitored hosts
 `ubuntu_hosts` and `windows_hosts` are both set to `0` by default in `terraform.tfvars`.
 
-You can specify up to `10` instances of each to spin up hosts that will have mirror sessions autoamtically created for them so they can be immediately monitored by Security Onion.  
+You can specify up to `10` instances of each to spin up hosts that will have mirror sessions automatically created for them so they can be immediately monitored by Security Onion.  
 
 Please note, typical AWS/EC2 infrastructure pricing still applies! 
 
