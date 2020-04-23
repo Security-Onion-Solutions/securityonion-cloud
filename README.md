@@ -82,6 +82,17 @@ Alternatively, if you simply want to verify VXLAN traffic is being mirrored to t
 `ifconfig ens6 up`   
 `tcpdump -nni ens6`
 
+##### MTU
+After running setup, you may want to alter the MTU of the sniffing interface to ensure you are able to capture all traffic you are expecting.
+
+This can be done by running the following command...
+
+`sudo ifconfig <sniffing int> mtu 1575`
+
+...and modifying `/etc/network/interfaces` to contain the following line at the end of the sniffing interface block:
+
+`mtu 1575`
+
 #### AutoMirror
 New instances capable of being mirrored (Nitro-based instances) will have a mirror session created for each of their interfaces.  Existing instances can be tagged with `Mirror=True` will also be picked up and have a mirror session created for them.
 This functionality is provided by the logic from [3CORESec AutoMirror](https://github.com/3CORESec/AWS-AutoMirror).
