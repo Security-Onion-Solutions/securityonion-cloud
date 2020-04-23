@@ -18,3 +18,13 @@ resource "aws_instance" "windows_instance" {
   }
 }
 
+resource "aws_security_group_rule" "example" {
+  count         = var.windows_hosts >= 1 ? 1 : 0
+  type              = "ingress"
+  from_port         = 3389
+  to_port           = 3389
+  protocol          = "tcp"
+  cidr_blocks = var.ip_whitelist
+  security_group_id = aws_security_group.securityonion.id
+}
+
