@@ -11,8 +11,8 @@ variable "onionuser" {
 }
 
 variable "onionpass" {
-  type        = list(string)
-  default     = [""]
+  type    = list(string)
+  default = [""]
 }
 
 variable "profile" {
@@ -68,3 +68,38 @@ variable "instance_type" {
   type    = string
   default = "t3.medium"
 }
+
+variable "auto_mirror" {
+  description = "If set to true, use 3CS AutoMirror to create sessions for eligible instances"
+  type        = bool
+}
+
+
+variable "ubuntu_instance_ami" {
+  type    = string
+  default = "ami-03ffa9b61e8d2cfda"
+}
+
+variable "ubuntu_instance_type" {
+  type    = string
+  default = "t3.small"
+}
+
+variable "ubuntu_hosts" {
+  default = 0
+}
+
+variable "windows_instance_ami" {
+  type    = string
+  default = "ami-08db69d5de9dc9245"
+}
+
+variable "windows_instance_type" {
+  type    = string
+  default = "t3.small"
+}
+
+variable "windows_hosts" {
+  default = 0
+}
+
