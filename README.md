@@ -26,7 +26,7 @@ By using Terraform, one can quickly spin up Security Onion in AWS, creating a de
 
 #### Clone repo
 `git clone -b dev https://github.com/Security-Onion-Solutions/securityonion-cloud
-&& cd securityonion-cloud/terraform`
+&& cd securityonion-cloud/terraform/aws`
 
 #### Install Terraform and AWS CLI
 ##### Linux (recommended Ubuntu 18.04 or higher) or Mac (as root or with sudo privilieges):
