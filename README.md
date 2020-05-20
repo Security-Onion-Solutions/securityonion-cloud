@@ -113,12 +113,12 @@ Then run:
 `sudo so-nids-restart`
 
 
-#### AutoMirror
+##### AutoMirror
 New instances capable of being mirrored (Nitro-based instances) will have a mirror session created for each of their interfaces.  Existing instances can be tagged with `Mirror=True` will also be picked up and have a mirror session created for them.
 This functionality is provided by the logic from [3CORESec AutoMirror](https://github.com/3CORESec/AWS-AutoMirror).
 
 Special thanks goes to @0xtf and team for all their work with AutoMirror!
 
-#### Tear it down
+##### Tear it down
 The instance and VPC configuration can quickly be destroyed with the following:   
 `terraform destroy --auto-approve`
