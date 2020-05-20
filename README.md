@@ -9,6 +9,6 @@ See: [AWS](https://github.com/Security-Onion-Solutions/securityonion-cloud/tree/
 ### Security Onion in GCP
 See: [GCP](https://github.com/Security-Onion-Solutions/securityonion-cloud/tree/master/terraform/gcp)
 
-### Decapsulating VXLAN-encapsulated PCAP:
+### Decapsulating VXLAN-encapsulated PCAP
 See: [VXLAN2PCAP](https://github.com/Security-Onion-Solutions/securityonion-cloud/tree/master/vxlan2pcap)
 
