@@ -73,6 +73,9 @@ The output from this command should provide you with the public IP address of yo
 #### SSH into instance
 `ssh -i ~/.ssh/securityonion onion@$instanceip`  
 
+#### Update
+Check for updates with `soup`.
+
 #### Run Setup   
 Run setup with `sosetup-minimal` to configure Security Onion on smaller-sized instances, choosing `Suricata` as the NIDS.   
 
