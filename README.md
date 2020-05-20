@@ -73,17 +73,16 @@ The output from this command should provide you with the public IP address of yo
 `ssh -i ~/.ssh/securityonion onion@$instanceip`  
 
 #### Run Setup   
-Run setup with `sosetup-minimal` to configure Security Onion on smaller-sized instances.   
+Run setup with `sosetup-minimal` to configure Security Onion on smaller-sized instances, choosing `Suricata` as the NIDS.   
 
-Otherwise, run setup with `sosetup` as you normally would.   
+Otherwise, run setup with `sosetup` as you normally would, choosing `Suricata` as the NIDS.   
 
 Alternatively, if you simply want to verify VXLAN traffic is being mirrored to the Security Onion sniffing interface, do something like the following once logged in:   
 
 `ifconfig ens6 up`   
 `tcpdump -nni ens6`
-
 ##### MTU
-After running setup, you may want to alter the MTU of the sniffing interface to ensure you are able to capture all traffic you are expecting.
+After running setup, you may also want to alter the MTU of the sniffing interface to ensure you are able to capture all traffic you are expecting.
 
 This can be done by running the following command...
 
@@ -92,6 +91,27 @@ This can be done by running the following command...
 ...and modifying `/etc/network/interfaces` to contain the following line at the end of the sniffing interface block:
 
 `mtu 1575`
+
+##### Suricata VXLAN
+Enable VXLAN decap for Suricata:
+
+`Edit /etc/nsm/<sensorname-interface/suricata.yaml`
+
+```
+vxlan
+  enabled: false
+```
+
+to 
+
+```
+vxlan
+  enabled: true
+```
+Then run:
+
+`sudo so-nids-restart`
+
 
 #### AutoMirror
 New instances capable of being mirrored (Nitro-based instances) will have a mirror session created for each of their interfaces.  Existing instances can be tagged with `Mirror=True` will also be picked up and have a mirror session created for them.
