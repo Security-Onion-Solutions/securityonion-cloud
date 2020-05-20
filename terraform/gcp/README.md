@@ -13,7 +13,7 @@ By using Terraform, one can quickly spin up Security Onion in Google Cloud, crea
 
 
 #### Clone repo
-`git clone -b dev https://github.com/Security-Onion-Solutions/securityonion-cloud
+`git clone https://github.com/Security-Onion-Solutions/securityonion-cloud
 && cd securityonion-cloud/terraform/gcp`
 
 #### Install Terraform
