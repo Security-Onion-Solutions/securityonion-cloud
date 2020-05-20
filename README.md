@@ -4,11 +4,11 @@
 The following components are currently supported and are in testing:
 
 ### Security Onion in AWS
-See: [AWS](https://github.com/Security-Onion-Solutions/securityonion-cloud/tree/dev/terraform/aws)
+See: [AWS](https://github.com/Security-Onion-Solutions/securityonion-cloud/tree/master/terraform/aws)
 
 ### Security Onion in GCP
-See: [GCP](https://github.com/Security-Onion-Solutions/securityonion-cloud/tree/dev/terraform/gcp)
+See: [GCP](https://github.com/Security-Onion-Solutions/securityonion-cloud/tree/master/terraform/gcp)
 
 ### Decapsulating VXLAN-encapsulated PCAP:
-See: [VXLAN2PCAP](https://github.com/Security-Onion-Solutions/securityonion-cloud/tree/dev/vxlan2pcap)
+See: [VXLAN2PCAP](https://github.com/Security-Onion-Solutions/securityonion-cloud/tree/master/vxlan2pcap)
 
