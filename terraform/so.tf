@@ -133,7 +133,6 @@ resource "aws_ec2_traffic_mirror_filter_rule" "so_outbound" {
   rule_number = 1
   rule_action = "accept"
   traffic_direction = "egress"
-  protocol = 6
 }
 
 resource "aws_ec2_traffic_mirror_filter_rule" "so_inbound" {
@@ -145,7 +144,6 @@ resource "aws_ec2_traffic_mirror_filter_rule" "so_inbound" {
   rule_number = 1
   rule_action = "accept"
   traffic_direction = "ingress"
-  protocol = 6
 
   destination_port_range {
     from_port = 1
