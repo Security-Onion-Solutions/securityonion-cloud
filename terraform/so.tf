@@ -144,13 +144,4 @@ resource "aws_ec2_traffic_mirror_filter_rule" "so_inbound" {
   rule_number = 1
   rule_action = "accept"
   traffic_direction = "ingress"
-
-  destination_port_range {
-    from_port = 1
-    to_port = 65535
-  }
-  source_port_range {
-    from_port = 1
-    to_port = 65535
-  }
 }
