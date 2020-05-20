@@ -26,7 +26,7 @@ By using Terraform, one can quickly spin up Security Onion in AWS, creating a de
 **PLEASE NOTE**: The default size EC2 instance used by the Terraform scripts is `t3.medium`, which is the **minimum** recommended size (2 cores/4GB RAM) to use while testing Security Onion in AWS.  Given that this instance is not free-tier eligible, you or your organization may be charged by AWS as a result of using an instance of this size or VPC mirroring -- we do not charge anything for the use of the Security Onion AMI itself.
 
 #### Clone repo
-`git clone -b dev https://github.com/Security-Onion-Solutions/securityonion-cloud
+`git clone https://github.com/Security-Onion-Solutions/securityonion-cloud
 && cd securityonion-cloud/terraform/aws`
 
 #### Install Terraform and AWS CLI
