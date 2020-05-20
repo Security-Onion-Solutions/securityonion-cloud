@@ -1,0 +1,17 @@
+variable "region" {}
+variable "project" {}
+variable "shared_credentials_file" {}
+variable "host_vpc_name" {}
+variable "so_vpc_name" {}
+variable "so_subnet_cidr" {}
+variable "host_subnet_cidr" {}
+variable "ip_whitelist" {}
+variable "public_key_name" {}
+variable "public_key_path" {}
+variable "private_key_path" {}
+variable "instance_type" {}
+variable "auto_mirror" {}
+variable "ubuntu_hosts" {}
+variable "windows_hosts" {}
+variable "ami" {}
+variable "profile" {}
