@@ -66,9 +66,12 @@ func main() {
             panic(err)
           }
 
-	  // Write packet
+	  // Write previously encapped packet
           w.WritePacket(depacket.Metadata().CaptureInfo, depacket.Data())
         }
+      } else {
+        // Write non-encapped packet
+        w.WritePacket(packet.Metadata().CaptureInfo, packet.Data())
       }
     }
   } else {
