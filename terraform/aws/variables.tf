@@ -61,7 +61,7 @@ variable "external_dns_servers" {
 
 variable "ami" {
   type    = string
-  default = "ami-023486790e5e80a3d"
+  default = "ami-0e547466e291ac1fc"
 }
 
 variable "instance_type" {
