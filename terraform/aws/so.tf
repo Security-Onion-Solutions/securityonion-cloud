@@ -68,6 +68,7 @@ resource "aws_instance" "securityonion" {
   count         = var.onions
   instance_type = var.instance_type
   ami           = var.ami
+  ebs_optimized = true
 
   tags = {
     Name = "security-onion-${count.index}"
@@ -93,7 +94,7 @@ resource "aws_instance" "securityonion" {
 
   root_block_device {
     delete_on_termination = true
-    volume_size           = 50
+    volume_size           = var.disk_size_gb 
   }
 }
 
@@ -103,6 +104,11 @@ resource "aws_network_interface_attachment" "securityonion" {
   instance_id          = aws_instance.securityonion[count.index].id
   network_interface_id = aws_network_interface.securityonion[count.index].id
   device_index         = 1
+
+  provisioner "local-exec" {
+    command = "aws ec2 reboot-instances --instance-ids ${aws_instance.securityonion[count.index].id}"
+  }
+
 }
 
 resource "aws_ec2_traffic_mirror_target" "security_onion_sniffing" {

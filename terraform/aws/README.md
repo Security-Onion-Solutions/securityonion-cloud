@@ -10,7 +10,7 @@ The following components are currently supported and are in testing:
 ### Security Onion AMI   
 The latest version available can be located under the AWS Community AMIs, titled:
 
-`Security-Onion-16.04-2020-07-07-1814`   
+`Security-Onion-16.04-2020-03-24-1209`   
 
 - us-east-1   
 `ami-0812da5a515ea53e7`   

@@ -69,6 +69,11 @@ variable "instance_type" {
   default = "t3.medium"
 }
 
+variable "disk_size_gb" {
+  type    = string
+  default = "100"
+}
+
 variable "auto_mirror" {
   description = "If set to true, use 3CS AutoMirror to create sessions for eligible instances"
   type        = bool
