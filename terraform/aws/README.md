@@ -15,7 +15,7 @@ The latest version available can be located under the AWS Community AMIs, titled
 - us-east-1   
 `ami-0812da5a515ea53e7`   
 - us-east-2   
-`ami-0e547466e291ac1fc`   
+`ami-00f495c47fd37c783`   
 
 
 ### Configuring the Security Onion AMI and VPC Traffic Mirroring with Terraform
