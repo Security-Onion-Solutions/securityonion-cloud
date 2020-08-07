@@ -19,6 +19,7 @@ aws configure
 echo
 echo "Configuring SSH key..."
 echo
+mkdir -p ~/.ssh
 ssh-keygen -b 2048 -f ~/.ssh/securityonion
 
 # Monitor host
