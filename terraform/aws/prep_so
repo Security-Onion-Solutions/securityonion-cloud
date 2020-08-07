@@ -3,7 +3,7 @@
 # Install Terraform/AWS CLI
 echo "Installing pre-requisites..."
 echo ""
-sudo install-terraform-awscli.sh 
+sudo ./install-terraform-awscli.sh 
 
 # Install jq
 [ -f /etc/lsb-release ] && apt install -y jq
