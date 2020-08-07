@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# Install Terraform/AWS CLI
+echo "Installing pre-requisites..."
+echo ""
+sudo install-terraform-awscli.sh 
+
+# Configure AWS
+echo
+echo "Configuring AWS CLI..."
+echo
+aws configure
+
+# Configure SSH Key
+echo
+echo "Configuring SSH key..."
+echo
+ssh-keygen -b 2048 -f ~/.ssh/securityonion
+
+# Monitor host
+echo
+read -n1 -p "Would you like to configure an Ubuntu host to be monitored? [Y/N]" configureUbuntu
+case $configureUbuntu in  
+  y|Y)  echo
+	echo
+	echo "Configuring Ubuntu host to be monitored..."
+	sed -i 's/ubuntu_hosts            = 0/ubuntu_hosts            = 1/' terraform.tfvars
+	echo 
+	;; 
+  n|N) 
+	echo
+	echo
+	echo "Not configuring Ubuntu host..."
+	echo 
+	;; 
+  *) 
+	echo "Not a valid response!" 
+	exit 1  
+	;; 
+esac
+
+echo
+echo "Configuration complete!  Please run the launch_so script to bring up your instance(s)"
+echo
