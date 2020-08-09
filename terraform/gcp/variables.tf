@@ -9,9 +9,4 @@ variable "ip_whitelist" {}
 variable "public_key_name" {}
 variable "public_key_path" {}
 variable "private_key_path" {}
-variable "instance_type" {}
-variable "auto_mirror" {}
-variable "ubuntu_hosts" {}
-variable "windows_hosts" {}
-variable "ami" {}
-variable "profile" {}
+variable "profile" {}                 
