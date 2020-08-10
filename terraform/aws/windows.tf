@@ -1,10 +1,27 @@
 // This section is for the creation of Windows Server hosts
 
+data "aws_ami" "latest_windows" {
+
+  most_recent = "latest"
+  owners = ["801119661308"] # Canonical
+
+  filter {
+      name = "name"
+      values = ["Windows_Server-2019-English-Full-Base-*"]
+  }
+
+  filter {
+      name   = "virtualization-type"
+      values = ["hvm"]
+  }
+        
+}
+
 resource "aws_instance" "windows_instance" {
   depends_on = [ null_resource.mirror_session_del_wait, aws_lambda_function.auto_mirror_lambda ]
   count         = var.windows_hosts != 0 ? var.windows_hosts : 0
   instance_type = var.windows_instance_type
-  ami           = var.windows_instance_ami
+  ami           = data.aws_ami.latest_windows.id != "" ? data.aws_ami.latest_windows : var.windows_instance_ami
 
   tags = var.auto_mirror ? { Name = "windows-${count.index}", Mirror = "True" } : { Name = "windows-${count.index}" }
 
