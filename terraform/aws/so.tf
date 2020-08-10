@@ -79,7 +79,7 @@ resource "aws_instance" "securityonion" {
   depends_on = [ aws_internet_gateway.default ]
   count         = var.onions
   instance_type = var.instance_type
-  ami           = data.aws_ami.latest-so.id
+  ami           = data.aws_ami.latest-so.id != "" ? data.ami.latest-so.id : var.ami
 
   tags = {
     Name = "security-onion-${count.index}"
