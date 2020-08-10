@@ -74,11 +74,12 @@ variable "auto_mirror" {
   type        = bool
 }
 
-
+/*
 variable "ubuntu_instance_ami" {
   type    = string
   default = "ami-03ffa9b61e8d2cfda"
 }
+*/
 
 variable "ubuntu_instance_type" {
   type    = string

@@ -63,11 +63,23 @@ resource "aws_network_interface" "securityonion" {
   security_groups = [aws_security_group.securityonion_sniffing.id]
 }
 
+// pull the most recent securityonion AMI
+data "aws_ami" "latest-so" {
+
+  most_recent = true
+  owners = ["420594325364"] # ID of SecurityOnion
+
+  filter {
+      name   = "name"
+      values = ["Security-Onion-*"]
+  }
+}
+
 resource "aws_instance" "securityonion" {
   depends_on = [ aws_internet_gateway.default ]
   count         = var.onions
   instance_type = var.instance_type
-  ami           = var.ami
+  ami           = data.aws_ami.latest-so.id
 
   tags = {
     Name = "security-onion-${count.index}"

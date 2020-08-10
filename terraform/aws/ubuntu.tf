@@ -1,10 +1,27 @@
 // This section is for the creation of Ubuntu hosts
 
+// pull the most recent ubuntu AMI
+data "aws_ami" "latest-ubuntu" {
+
+  most_recent = true
+  owners = ["099720109477"] # Canonical
+
+  filter {
+      name   = "name"
+      values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+  }
+
+  filter {
+      name   = "virtualization-type"
+      values = ["hvm"]
+  }
+}
+
 resource "aws_instance" "ubuntu_instance" {
   depends_on = [ null_resource.mirror_session_del_wait, aws_lambda_function.auto_mirror_lambda ]
   count         = var.ubuntu_hosts != 0 ? var.ubuntu_hosts : 0
   instance_type = var.ubuntu_instance_type
-  ami           = var.ubuntu_instance_ami
+  ami           = data.aws_ami.latest-ubuntu.id
 
   tags = var.auto_mirror ? { Name = "ubuntu-${count.index}", Mirror = "True" } : { Name = "ubuntu-${count.index}" }
 
