@@ -65,7 +65,7 @@ resource "aws_network_interface" "securityonion" {
 
 data "aws_ami" "latest_so" {
   
-  most_recent = "latest"
+  most_recent = true
   owners = ["420594325364"]
 
   filter {
