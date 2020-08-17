@@ -12,11 +12,14 @@ The latest version available can be located under the AWS Community AMIs, titled
 
 `Security-Onion-16.04`   
 
-*eu-central-1*: `ami-095b2f857622ecc34`  
-*eu-west-2*: `ami-05a57b5d7371e2110`  
-*us-east-2*: `ami-07dbe610064805440`  
-*us-west-2*: `ami-040bd1a2ba5e39e30`   
+The image is currently hosted in the following regions:
 
+`eu-central-1`      
+`eu-west-2`          
+`us-east-2`      
+`us-west-2`    
+
+If using Terraform, the correct image will be pulled upon the run of `terraform apply`.
 
 ### Configuring the Security Onion AMI and VPC Traffic Mirroring with Terraform
 Special thanks goes to Jonathan Johnson (@jsecurity101) and Dustin Lee (@dlee35),for their existing work on the base Terraform configuration and Security Onion additions!
