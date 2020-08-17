@@ -2,7 +2,7 @@
 
 data "aws_ami" "latest_windows" {
 
-  most_recent = "latest"
+  most_recent = true
   owners = ["801119661308"] # Canonical
 
   filter {

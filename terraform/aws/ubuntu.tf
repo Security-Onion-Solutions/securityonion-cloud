@@ -2,7 +2,7 @@
 
 data "aws_ami" "latest_ubuntu" {
 
-  most_recent = "latest"
+  most_recent = true
   owners = ["099720109477"] # Canonical
 
   filter {
