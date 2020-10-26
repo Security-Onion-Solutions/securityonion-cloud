@@ -35,3 +35,4 @@ resource "aws_instance" "ubuntu_instance" {
   }
 }
 
+ 
