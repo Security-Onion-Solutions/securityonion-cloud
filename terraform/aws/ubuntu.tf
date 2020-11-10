@@ -21,7 +21,7 @@ resource "aws_instance" "ubuntu_instance" {
   depends_on = [ null_resource.mirror_session_del_wait, aws_lambda_function.auto_mirror_lambda ]
   count         = var.ubuntu_hosts != 0 ? var.ubuntu_hosts : 0
   instance_type = var.ubuntu_instance_type
-  ami           = data.aws_ami.latest_ubuntu.id != "" ? data.aws_ami.latest_ubuntu : var.ubuntu_instance_ami
+  ami           = data.aws_ami.latest_ubuntu.id != "" ? data.aws_ami.latest_ubuntu.id : var.ubuntu_instance_ami
 
   tags = var.auto_mirror ? { Name = "ubuntu-${count.index}", Mirror = "True" } : { Name = "ubuntu-${count.index}" }
 
