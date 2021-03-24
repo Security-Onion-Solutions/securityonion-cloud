@@ -5,7 +5,7 @@ EXTERNAL_IP=$(dig TXT +short o-o.myaddr.l.google.com @ns1.google.com | awk -F'"'
 sed -i "s|^ip_whitelist.*|ip_whitelist            = [\"$EXTERNAL_IP/32\"] #Change this to your public ip/32|" terraform.tfvars
 
 # Set to Latest AMI
-aws ec2 describe-images --owners 420594325364| jq -r '.Images[] | select(.Name == "Security-Onion-16.04").ImageId' | xargs -I {} sudo sed -i 's/ami                     = "ami-.*"/ami                     = "{}"/' terraform.tfvars
+aws ec2 describe-images --owners 679593333241| jq -r '.Images[] | select(.Name | startswith("Security Onion 2.3.30")).ImageId' | xargs -I {} sudo sed -i 's/ami                     = "ami-.*"/ami                     = "{}"/' terraform.tfvars
 
 # Apply Terraform state
 terraform init
