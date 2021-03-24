@@ -1,4 +1,6 @@
 # Security Onion in the Cloud
+# DISCLAIMER: The following content was developed for usage with Security Onion 16.04 and has not yet been updated for Security Onion 2.
+
 **NOTE: The Security Onion Google Image and associated scripts are still in testing, and are NOT recommended for production use.**
 
 The following components are currently supported and are in testing:
