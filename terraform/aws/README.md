@@ -8,11 +8,7 @@ The following components are currently supported and are in testing:
 - Security Onion Terraform Configuration 
 
 ### Security Onion AMI   
-The latest version available can be located under the AWS Community AMIs, titled:
-
-`Security Onion 2.x.x`   
-
-The Security Onion 2 image is currently hosted in all regions.
+The latest version of the Security Onion AMI can be found in all regions in the AWS marketplace, titled `Security Onion 2`.
 
 ### NOTE 
 Before attempting to stand up an instance via Terraform with the official Security Onion 2 AMI, you will need to agree to the terms and conditions in the AWS Marketplace.  
