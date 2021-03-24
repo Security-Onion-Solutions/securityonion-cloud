@@ -28,7 +28,7 @@ Special thanks goes to Jonathan Johnson (@jsecurity101) and Dustin Lee (@dlee35)
 
 By using Terraform, one can quickly spin up Security Onion in AWS, creating a dedicated VPC, security groups, Security Onion EC2 instance, interfaces, VPC mirror configuration, and monitored Ubuntu/Windows hosts (if desired), provided you have an existing AWS account.
 
-**PLEASE NOTE**: The default size EC2 instance used by the Terraform scripts is `t3a.xlarge`, which is the **minimum** recommended size (4 cores/16GB RAM) to use while testing Security Onion in AWS.  Given that this instance is not free-tier eligible, you or your organization may be charged by AWS as a result of using an instance of this size or VPC mirroring -- we do not charge anything for the use of the Security Onion AMI itself.
+**PLEASE NOTE**: The default size EC2 instance used by the Terraform scripts is `t3a.xlarge`, which is the **minimum** recommended size (4 cores/16GB RAM) to use while testing Security Onion in AWS.  Given that this instance is not free-tier eligible, you or your organization may be charged by AWS as a result of using an instance of this size and/or VPC mirroring.
 
 #### Clone repo
 `git clone https://github.com/Security-Onion-Solutions/securityonion-cloud
