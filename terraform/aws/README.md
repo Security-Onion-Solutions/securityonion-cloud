@@ -1,6 +1,6 @@
 
 # Security Onion in the Cloud
-**NOTE: The Security Onion AMI and associated scripts are still in testing, and are NOT recommended for production use.**
+**NOTE: The associated scripts are NOT recommended for production use.**
 
 The following components are currently supported and are in testing:
 
@@ -8,16 +8,14 @@ The following components are currently supported and are in testing:
 - Security Onion Terraform Configuration 
 
 ### Security Onion AMI   
-The latest version available can be located under the AWS Community AMIs, titled:
+The latest version of the Security Onion AMI can be found in all regions in the AWS marketplace, titled `Security Onion 2`.
 
-`Security-Onion-16.04`   
+### NOTE 
+Before attempting to stand up an instance via Terraform with the official Security Onion 2 AMI, you will need to agree to the terms and conditions in the AWS Marketplace.  
 
-The image is currently hosted in the following regions:
+Terms, conditions, and the official AMI can be found here:
 
-`eu-central-1`      
-`eu-west-2`          
-`us-east-2`      
-`us-west-2`    
+https://aws.amazon.com/marketplace/pp/B08Y63CS2T?_ptnr_gh_cld
 
 If using Terraform, the correct image will be pulled upon the run of `terraform apply`.
 
@@ -26,7 +24,7 @@ Special thanks goes to Jonathan Johnson (@jsecurity101) and Dustin Lee (@dlee35)
 
 By using Terraform, one can quickly spin up Security Onion in AWS, creating a dedicated VPC, security groups, Security Onion EC2 instance, interfaces, VPC mirror configuration, and monitored Ubuntu/Windows hosts (if desired), provided you have an existing AWS account.
 
-**PLEASE NOTE**: The default size EC2 instance used by the Terraform scripts is `t3.medium`, which is the **minimum** recommended size (2 cores/4GB RAM) to use while testing Security Onion in AWS.  Given that this instance is not free-tier eligible, you or your organization may be charged by AWS as a result of using an instance of this size or VPC mirroring -- we do not charge anything for the use of the Security Onion AMI itself.
+**PLEASE NOTE**: The default size EC2 instance used by the Terraform scripts is `t3a.xlarge`, which is the **minimum** recommended size (4 cores/16GB RAM) to use while testing Security Onion in AWS.  Given that this instance is not free-tier eligible, you or your organization may be charged by AWS as a result of using an instance of this size and/or VPC mirroring.
 
 #### Clone repo
 `git clone https://github.com/Security-Onion-Solutions/securityonion-cloud
@@ -43,7 +41,6 @@ https://stackoverflow.com/questions/1618280/where-can-i-set-path-to-make-exe-on-
 #### Configure AWS details
 See the following for more details:   
 https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html#cli-quick-configuration
-
 
 `aws configure` (Provide secret/access key, etc)
 
@@ -76,49 +73,8 @@ The output from this command should provide you with the public IP address of yo
 #### SSH into instance
 `ssh -i ~/.ssh/securityonion onion@$instanceip`  
 
-#### Update
-Check for updates with `soup`.
-
-#### Run Setup   
-Run setup with `sosetup-minimal` to configure Security Onion on smaller-sized instances, choosing `Suricata` as the NIDS.   
-
-Otherwise, run setup with `sosetup` as you normally would, choosing `Suricata` as the NIDS.   
-
-Alternatively, if you simply want to verify VXLAN traffic is being mirrored to the Security Onion sniffing interface, do something like the following once logged in:   
-
-`ifconfig ens6 up`   
-`tcpdump -nni ens6`
-##### MTU
-After running setup, you may also want to alter the MTU of the sniffing interface to ensure you are able to capture all traffic you are expecting.
-
-This can be done by running the following command...
-
-`sudo ifconfig <sniffing int> mtu 1575`
-
-...and modifying `/etc/network/interfaces` to contain the following line at the end of the sniffing interface block:
-
-`mtu 1575`
-
-##### Suricata VXLAN
-Enable VXLAN decap for Suricata:
-
-`Edit /etc/nsm/<sensorname-interface/suricata.yaml`
-
-```
-vxlan
-  enabled: false
-```
-
-to 
-
-```
-vxlan
-  enabled: true
-```
-Then run:
-
-`sudo so-nids-restart`
-
+#### Setup   
+Setup will begin once logged into the instance via SSH.  Follow the prompts until setup finishes.  Once complete, a reboot will be required.  
 
 ##### AutoMirror
 New instances capable of being mirrored (Nitro-based instances) will have a mirror session created for each of their interfaces.  Existing instances can be tagged with `Mirror=True` will also be picked up and have a mirror session created for them.

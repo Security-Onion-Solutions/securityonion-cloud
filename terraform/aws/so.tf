@@ -66,11 +66,11 @@ resource "aws_network_interface" "securityonion" {
 data "aws_ami" "latest_so" {
   
   most_recent = true
-  owners = ["420594325364"]
+  owners = ["679593333241"]
 
   filter {
     name = "name"
-    values = ["Security-Onion-*"]
+    values = ["Security Onion 2.3.30*"]
   }
 }
 
@@ -89,22 +89,9 @@ resource "aws_instance" "securityonion" {
   key_name               = aws_key_pair.auth.key_name
   private_ip             = "172.16.163.1${count.index}"
 
-  provisioner "remote-exec" {
-    inline = [
-      "echo '127.0.0.1 securityonion-${count.index}' | sudo tee -a /etc/hosts",
-      "sudo hostnamectl set-hostname securityonion-${count.index}",
-    ]
-    connection {
-      host        = coalesce(self.public_ip, self.private_ip)
-      type        = "ssh"
-      user        = "onion"
-      private_key = file(var.private_key_path)
-    }
-  }
-
   root_block_device {
     delete_on_termination = true
-    volume_size           = 50
+    volume_size           = 250
   }
 }
 
