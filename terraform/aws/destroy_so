@@ -3,4 +3,5 @@
 # Destroy instances
 terraform destroy --auto-approve
 # Remove allowed IP from terraform.tfvars
+echo "Resetting EXTERNAL_IP variable...may prompt for credentials..."
 sudo sed -i 's|^ip_whitelist.*|ip_whitelist            = ["0.0.0.0/32"] #Change this to your public ip/32|' terraform.tfvars

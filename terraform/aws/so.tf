@@ -70,7 +70,7 @@ data "aws_ami" "latest_so" {
 
   filter {
     name = "name"
-    values = ["Security Onion ${var.soversion}"]
+    values = ["Security Onion ${var.soversion}*"]
   }
 }
 
