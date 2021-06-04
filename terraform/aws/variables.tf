@@ -61,7 +61,12 @@ variable "external_dns_servers" {
 
 variable "ami" {
   type    = string
-  default = "ami-0e547466e291ac1fc"
+  default = ""
+}
+
+variable "soversion" {
+  type = string
+  default = "2.*"
 }
 
 variable "instance_type" {
