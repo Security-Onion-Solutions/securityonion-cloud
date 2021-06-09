@@ -1,13 +1,20 @@
-project                 = "<enterprojecthere>"
+project                 = "yourproject"
 host_vpc_name           = "hosts"     
 so_vpc_name             = "securityonion"
 so_subnet_cidr          = "172.16.163.0/24"
 host_subnet_cidr        = "172.16.164.0/24"
 region                  = "us-east1"
+zone                    = "us-east1-b"
 profile                 = "terraform"
-shared_credentials_file = "<your_credentials_file>"
+shared_credentials_file = "yourcredentialsfile.json"
 public_key_name         = "securityonion"
 public_key_path         = "~/.ssh/securityonion.pub"
 private_key_path        = "~/.ssh/securityonion"
-ip_whitelist            = "0.0.0.0/0" #Change this to your public ip/32
+so_machine_type         = "e2-standard-4"
+so_machine_name         = "securityonion-gcp"
+so_image_family         = "centos-7"
+so_image_project        = "centos-cloud"
+so_image_size           = "200"
+so_username             = "onion"
+ip_whitelist            = "0.0.0.0/32" #Change this to your public ip/32
 
