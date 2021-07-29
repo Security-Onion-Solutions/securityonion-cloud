@@ -40,6 +40,8 @@ resource "null_resource" "configure_so" {
       "sudo yum update -y",
       "sudo yum install -y git",
       "git clone https://github.com/security-onion-solutions/securityonion",
+      "sudo sed -i 's/#plugins=.*/plugins=keyfile/' /etc/NetworkManager/NetworkManager.conf",
+      "sudo systemctl restart NetworkManager",
     ]
     connection {
      type     = "ssh"
