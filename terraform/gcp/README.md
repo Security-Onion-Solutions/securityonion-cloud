@@ -5,14 +5,11 @@
 
 The following components are currently supported and are in testing:
 
-- Security Onion Google Image
 - Security Onion Terraform Configuration 
 
-
-### Configuring the Security Onion Image and Packet Mirroring with Terraform
+### Configuring the Security Onion Instance and Packet Mirroring with Terraform
 
 By using Terraform, one can quickly spin up Security Onion in Google Cloud, creating all the necessary components to faciliate packet mirroring.
-
 
 #### Clone repo
 `git clone https://github.com/Security-Onion-Solutions/securityonion-cloud
@@ -20,6 +17,7 @@ By using Terraform, one can quickly spin up Security Onion in Google Cloud, crea
 
 #### Install Terraform
 ##### Linux (recommended Ubuntu 18.04 or higher) or Mac (as root or with sudo privilieges):
+`pip3 --upgrade pip`
 `./install-terraform.sh`
 ##### Windows
 https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-windows.html#cliv2-windows-prereq   
@@ -41,13 +39,6 @@ Edit `terraform.tfvars` with external IP/netmask (gathered above) for whitelist
 
 `Ex. "192.168.1.1/32"`
 
-#### Enable additional monitored hosts
-`ubuntu_hosts` is set to `0` by default in `terraform.tfvars`.
-
-You can specify up to `10` host instances that will have packet mirroring automatically configured for them so they can be immediately monitored by Security Onion.  
-
-Please note, typical GCloud infrastructure pricing still applies! 
-
 #### Initialize Terraform
 `terraform init`
 
@@ -59,49 +50,12 @@ The output from this command should provide you with the public IP address of yo
 #### SSH into instance
 `ssh -i ~/.ssh/securityonion onion@$instanceip`  
 
-
-#### Update
-Check for updates with `soup`.
-
 #### Run Setup   
-Run setup with `sosetup-minimal` to configure Security Onion on smaller-sized instances, choosing `Suricata` as the NIDS.   
 
-Otherwise, run setup with `sosetup` as you normally would, choosing `Suricata` as the NIDS.   
+`cd securityonion`
+`sudo ./so-setup-network`
 
-Alternatively, if you simply want to verify VXLAN traffic is being mirrored to the Security Onion sniffing interface, do something like the following once logged in:   
-
-`ifconfig ens6 up`   
-`tcpdump -nni ens6`
-##### MTU
-After running setup, you may also want to alter the MTU of the sniffing interface to ensure you are able to capture all traffic you are expecting.
-
-This can be done by running the following command...
-
-`sudo ifconfig <sniffing int> mtu 1575`
-
-...and modifying `/etc/network/interfaces` to contain the following line at the end of the sniffing interface block:
-
-`mtu 1575`
-
-##### Suricata VXLAN
-Enable VXLAN decap for Suricata:
-
-`Edit /etc/nsm/<sensorname-interface/suricata.yaml`
-
-```
-vxlan
-  enabled: false
-```
-
-to 
-
-```
-vxlan
-  enabled: true
-```
-Then run:
-
-`sudo so-nids-restart`
+Follow the prompts in setup. When asked to choose the method for web access, choose `OTHER` and provide a name that can be mapped via a hosts file or resolvable via DNS.
 
 ##### Tear it down
 The instance and VPC configuration can quickly be destroyed with the following:   
